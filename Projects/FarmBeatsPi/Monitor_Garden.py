@@ -50,7 +50,7 @@ light_sensor = 0
 # SIG,NC,VCC,GND
 moisture_sensor = 2
 
-log_file="plant_monitor_log.csv"
+log_file="farmbeatspi_log.csv"
 
 while True:
     try:
@@ -79,6 +79,8 @@ while True:
         f=open(log_file,'a')
         f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture_sensor_value,light_sensor_value,temp,humidity))
         f.close()
+
+        del light_sensor_value, moisture_sensor_value, temp, humidity
 
         time.sleep(5)
 
