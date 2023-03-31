@@ -33,6 +33,7 @@ THE SOFTWARE.
 import grovepi
 import math
 import time
+import csv
 
 # Connect the Grove Temperature & Humidity Sensor Pro to digital port D4
 # This example uses the blue colored sensor.
@@ -50,7 +51,7 @@ light_sensor = 0
 # SIG,NC,VCC,GND
 moisture_sensor = 2
 
-log_file="farmbeatspi_log.csv"
+logFile="farmbeatspi_log.csv"
 
 #Read the data from the sensors
 def read_sensor():
@@ -67,6 +68,9 @@ def read_sensor():
 	except IOError as TypeError:
 			return [-1,-1,-1,-1]
 
+with open(logFile, 'a', newline='') as csvFile:
+    dataWriter = csv.writer(csvFile)
+
 while True:
     try:
         curr_time = time.strftime("%Y-%m-%d:%H-%M-%S")
@@ -76,14 +80,18 @@ while True:
         # Print the collected sensor readings to terminal
         print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(curr_time,moisture,light,temp,humidity)))
 
+        dataWriter.writerow(curr_time,moisture,light,temp,humidity)
+
 		# Save the sensor readings to the CSV file
-        f=open(log_file,'a')
-        f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture,light,temp,humidity))
-        f.close()
+        #f=open(logFile,'a')
+        #f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture,light,temp,humidity))
+        #f.close()
 
         del light, moisture, temp, humidity
 
         time.sleep(5)
-
+    except KeyboardInterrupt:
+        csvFile.close()
+        break
     except IOError:
         print ("Error")
