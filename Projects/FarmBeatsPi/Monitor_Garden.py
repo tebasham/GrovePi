@@ -67,8 +67,8 @@ def readSensor():
 	except IOError as TypeError:
 			return [-1,-1,-1,-1]
 
-with open(logFile, 'a', newline='') as csvFile:
-    dataWriter = csv.writer(csvFile)
+csvFile = open(logFile, 'a', newline='')
+dataWriter = csv.writer(csvFile)
 
 while True:
     try:
