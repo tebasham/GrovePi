@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # The GrovePi connects the Raspberry Pi and Grove sensors.  You can learn more about GrovePi here:  http://www.dexterindustries.com/GrovePi
-# Connect the Grove DHT Sensor (Blue One) to Port 4 in this example.
+# Connect the Grove DHT Sensor (White One) to Port 2 in this example.
 #
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/grovepi
 #
@@ -57,13 +57,13 @@ def Main():
     print("[program is running][please wait]")
 
     global dht_sensor
-    digital_port = 4
+    digital_port = 2
 
     # set the digital port for the DHT sensor
     dht_sensor.setDhtPin(digital_port)
     # using the blue kind of sensor
     # there's also the white one which can be set by calling [dht.setAsWhiteSensor()] function
-    dht_sensor.setAsBlueSensor()
+    dht_sensor.setAsWhiteSensor()
     # specifies for how long we record data before we filter it
     # it's better to have larger periods of time,
     # because the statistical algorithm has a vaster pool of values

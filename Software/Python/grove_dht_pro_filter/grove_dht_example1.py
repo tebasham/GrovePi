@@ -39,7 +39,7 @@ from time import sleep # we need to use the sleep function to delay readings
 # Don't forget to run it with Python 3 !!
 # Don't forget to run it with Python 3 !!
 
-dht_pin = 4 # use Digital Port 4 found on GrovePi
+dht_pin = 2 # use Digital Port 2 found on GrovePi
 dht_sensor = Dht(dht_pin) # instantiate a dht class with the appropriate pin
 
 dht_sensor.start() # start collecting from the DHT sensor

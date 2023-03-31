@@ -39,7 +39,7 @@ def statisticalNoiseReduction(values, std_factor_threshold = 2):
 # on the same separate thread, the filtering process takes place
 class Dht(threading.Thread):
 	# refresh_period specifies for how long data is captured before it's filtered
-	def __init__(self, pin = 4, refresh_period = 10.0, debugging = False):
+	def __init__(self, pin = 2, refresh_period = 10.0, debugging = False):
 		super(Dht, self).__init__(name = "DHT filtering")
 
 		self.pin = pin
@@ -51,7 +51,7 @@ class Dht(threading.Thread):
 		self.white_sensor = 1
 		self.filtering_aggresiveness = 2
 		self.callbackfunc = None
-		self.sensor_type = self.blue_sensor
+		self.sensor_type = self.white_sensor
 
 		self.lock = threading.Lock()
 
@@ -74,8 +74,8 @@ class Dht(threading.Thread):
 		self.sensor_type = self.white_sensor
 
 	# use the blue sensor module
-	def setAsBlueSensor(self):
-		self.sensor_type = self.blue_sensor
+	#def setAsBlueSensor(self):
+	#	self.sensor_type = self.blue_sensor
 
 	# removes the processed data from the buffer
 	def clearBuffer(self):
