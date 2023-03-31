@@ -77,7 +77,7 @@ while True:
         [moisture,light,temp,humidity] = readSensor()
 
         # Print the collected sensor readings to terminal
-        print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
+        print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
 
         dataWriter.writerow(currTime,moisture,light,temp,humidity)
 
