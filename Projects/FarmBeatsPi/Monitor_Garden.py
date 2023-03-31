@@ -50,8 +50,7 @@ lightSensor = 0
 # SIG,NC,VCC,GND
 moistureSensor = 2
 
-logFile="farmbeatspi_log.csv"
-csvFile = open(logFile, 'a', newline='')
+logFile = open("farmbeatspi_log.csv", 'a', newline='')
 
 #Read the data from the sensors
 def readSensor():
@@ -70,7 +69,7 @@ def readSensor():
 
 # Write data to CSV file
 def writeCsvData(csvSensorData):
-    dataWriter = csv.writer(csvFile)
+    dataWriter = csv.writer(logFile)
     dataWriter.writerow(csvSensorData)
     return 1 
 
@@ -93,7 +92,7 @@ while True:
 
         time.sleep(5)
     except KeyboardInterrupt:
-        csvFile.close()
+        logFile.close()
         break
     except IOError:
         print("Error")
