@@ -44,7 +44,7 @@ dht_white = 1   # The White colored sensor.
 # Connect the Grove Light Sensor to analog port A0
 # SIG,NC,VCC,GND
 light_sensor = 0
-grovepi.pinMode(light_sensor,"INPUT")
+#grovepi.pinMode(light_sensor,"INPUT")
 
 # Connect the Grove Moisture Sensor to analog port A2
 # SIG,NC,VCC,GND
@@ -57,13 +57,14 @@ while True:
         if math.isnan(temp) == False and math.isnan(humidity) == False:
             print("temp = %.02f C humidity =%.02f%%" %(temp, humidity))
 
-        # Get sensor value
+        # Get Light sensor value
         light_sensor_value = grovepi.analogRead(light_sensor)
 
-        # Calculate resistance of sensor in K
+        # Calculate resistance of light sensor in K
         light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
         print("light_sensor_value = %d resistance = %.2f" %(light_sensor_value,  light_resistance))
 
+        # Get Moisture sensor value and print
         print(grovepi.analogRead(moisture_sensor))
 
         time.sleep(.9)
