@@ -55,19 +55,19 @@ while True:
         # The first parameter is the port, the second parameter is the type of sensor.
         [temp,humidity] = grovepi.dht(dht_sensor,dht_white)  
         if math.isnan(temp) == False and math.isnan(humidity) == False:
-            print("temp = %.02f C humidity =%.02f%%" %(temp, humidity))
+            print("Temperature: %.02f C Humidity: %.02f%%" %(temp, humidity))
 
         # Get Light sensor value
         light_sensor_value = grovepi.analogRead(light_sensor)
 
         # Calculate resistance of light sensor in K
         light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
-        print("light_sensor_value = %d resistance = %.2f" %(light_sensor_value,  light_resistance))
+        print("Light Sensor Level: %d K: %.2f" %(light_sensor_value,  light_resistance))
 
         # Get Moisture sensor value and print
-        print(grovepi.analogRead(moisture_sensor))
+        print("Soil Moisture Level: %d" %grovepi.analogRead(moisture_sensor))
 
-        time.sleep(.9)
+        time.sleep(5)
 
     except IOError:
         print ("Error")
