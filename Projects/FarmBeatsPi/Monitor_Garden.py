@@ -51,6 +51,7 @@ lightSensor = 0
 moistureSensor = 2
 
 logFile="farmbeatspi_log.csv"
+csvFile = open(logFile, 'a', newline='')
 
 #Read the data from the sensors
 def readSensor():
@@ -67,8 +68,11 @@ def readSensor():
 	except IOError as TypeError:
 			return [-1,-1,-1,-1]
 
-csvFile = open(logFile, 'a', newline='')
-dataWriter = csv.writer(csvFile)
+# Write data to CSV file
+def writeCsvData(csvSensorData):
+    dataWriter = csv.writer(csvFile)
+    dataWriter.writerow(csvSensorData)
+    return 1 
 
 while True:
     try:
@@ -79,15 +83,13 @@ while True:
         # Print the collected sensor readings to terminal
         print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
 
-        csvSensorData = [currTime,moisture,light,temp,humidity]
-        dataWriter.writerow(csvSensorData)
+        # Write the collected sensor readings to csv file
+        writeCsvData([currTime,moisture,light,temp,humidity])
 
 		# Save the sensor readings to the CSV file
         #f=open(logFile,'a')
         #f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture,light,temp,humidity))
         #f.close()
-
-        del light, moisture, temp, humidity, currTime, csvSensorData
 
         time.sleep(5)
     except KeyboardInterrupt:
