@@ -52,35 +52,36 @@ moisture_sensor = 2
 
 log_file="farmbeatspi_log.csv"
 
+#Read the data from the sensors
+def read_sensor():
+	try:
+		moisture=grovepi.analogRead(moisture_sensor)
+		light=grovepi.analogRead(light_sensor)
+		[temp,humidity] = grovepi.dht(dht_sensor,dht_white)
+		#Return -1 in case of bad temp/humidity sensor reading
+		if math.isnan(temp) or math.isnan(humidity):		#temp/humidity sensor sometimes gives nan
+			return [-1,-1,-1,-1]
+		return [moisture,light,temp,humidity]
+	
+	#Return -1 in case of sensor error
+	except IOError as TypeError:
+			return [-1,-1,-1,-1]
+
 while True:
     try:
-        # The first parameter is the port, the second parameter is the type of sensor.
-        [temp,humidity] = grovepi.dht(dht_sensor,dht_white)  
-        if math.isnan(temp) == False and math.isnan(humidity) == False:
-            print("Temperature: %.02f C Humidity: %.02f%%" %(temp, humidity))
-
-        # Get Light sensor value
-        light_sensor_value = grovepi.analogRead(light_sensor)
-
-        # Calculate resistance of light sensor in K
-        #if light_sensor_value > 0:
-        #    light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
-        #    print("Light Sensor Level: %d K: %.2f" %(light_sensor_value,  light_resistance))
-
-        # Get Moisture sensor value
-        moisture_sensor_value = grovepi.analogRead(moisture_sensor)
-
         curr_time = time.strftime("%Y-%m-%d:%H-%M-%S")
 
+        [moisture,light,temp,humidity]=read_sensor()
+
         # Print the collected sensor readings to terminal
-        print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(curr_time,moisture_sensor_value,light_sensor_value,temp,humidity)))
+        print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(curr_time,moisture,light,temp,humidity)))
 
 		# Save the sensor readings to the CSV file
         f=open(log_file,'a')
-        f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture_sensor_value,light_sensor_value,temp,humidity))
+        f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture,light,temp,humidity))
         f.close()
 
-        del light_sensor_value, moisture_sensor_value, temp, humidity
+        del light, moisture, temp, humidity
 
         time.sleep(5)
 
