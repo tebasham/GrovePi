@@ -36,29 +36,28 @@ import time
 import csv
 
 # Connect the Grove Temperature & Humidity Sensor Pro to digital port D4
-# This example uses the blue colored sensor.
 # SIG,NC,VCC,GND
-dht_sensor = 2  # The Sensor goes on digital port D4.
-# temp_humidity_sensor_type
-dht_white = 1   # The White colored sensor.
+dhtSensor = 2
+# DHT Pro Sensor Type
+dhtType = 1   # The White colored sensor.
+#dhtType = 0    # The Blue colored sensor.
 
 # Connect the Grove Light Sensor to analog port A0
 # SIG,NC,VCC,GND
-light_sensor = 0
-#grovepi.pinMode(light_sensor,"INPUT")
+lightSensor = 0
 
 # Connect the Grove Moisture Sensor to analog port A2
 # SIG,NC,VCC,GND
-moisture_sensor = 2
+moistureSensor = 2
 
 logFile="farmbeatspi_log.csv"
 
 #Read the data from the sensors
-def read_sensor():
+def readSensor():
 	try:
-		moisture=grovepi.analogRead(moisture_sensor)
-		light=grovepi.analogRead(light_sensor)
-		[temp,humidity] = grovepi.dht(dht_sensor,dht_white)
+		moisture = grovepi.analogRead(moistureSensor)
+		light = grovepi.analogRead(lightSensor)
+		[temp,humidity] = grovepi.dht(dhtSensor,dhtType)
 		#Return -1 in case of bad temp/humidity sensor reading
 		if math.isnan(temp) or math.isnan(humidity):		#temp/humidity sensor sometimes gives nan
 			return [-1,-1,-1,-1]
@@ -73,14 +72,14 @@ with open(logFile, 'a', newline='') as csvFile:
 
 while True:
     try:
-        curr_time = time.strftime("%Y-%m-%d:%H-%M-%S")
+        currTime = time.strftime("%Y-%m-%d:%H-%M-%S")
 
-        [moisture,light,temp,humidity]=read_sensor()
+        [moisture,light,temp,humidity] = readSensor()
 
         # Print the collected sensor readings to terminal
-        print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(curr_time,moisture,light,temp,humidity)))
+        print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
 
-        dataWriter.writerow(curr_time,moisture,light,temp,humidity)
+        dataWriter.writerow(currTime,moisture,light,temp,humidity)
 
 		# Save the sensor readings to the CSV file
         #f=open(logFile,'a')
@@ -94,4 +93,4 @@ while True:
         csvFile.close()
         break
     except IOError:
-        print ("Error")
+        print("Error")
