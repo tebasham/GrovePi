@@ -48,11 +48,11 @@ import subprocess
 import math
 
 #analog sensor port number
-mositure_sensor			= 1
-light_sensor			= 2
+mositure_sensor			= 2
+light_sensor			= 0
 
 #digital sensor
-temp_himidity_sensor	= 4
+temp_himidity_sensor	= 2
 
 #temp_himidity_sensor type
 #	grove starter kit comes with the bluew sensor
