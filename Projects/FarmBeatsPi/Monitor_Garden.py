@@ -50,6 +50,8 @@ light_sensor = 0
 # SIG,NC,VCC,GND
 moisture_sensor = 2
 
+log_file="plant_monitor_log.csv"
+
 while True:
     try:
         # The first parameter is the port, the second parameter is the type of sensor.
@@ -64,11 +66,19 @@ while True:
         #if light_sensor_value > 0:
         #    light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
         #    print("Light Sensor Level: %d K: %.2f" %(light_sensor_value,  light_resistance))
-        
-        print("Light Sensor Level: %d" %(light_sensor_value))
 
-        # Get Moisture sensor value and print
-        print("Soil Moisture Level: %d" %grovepi.analogRead(moisture_sensor))
+        # Get Moisture sensor value
+        moisture_sensor_value = grovepi.analogRead(moisture_sensor)
+
+        curr_time = time.strftime("%Y-%m-%d:%H-%M-%S")
+
+        # Print the collected sensor readings to terminal
+        print(("Time:%s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(curr_time,moisture_sensor_value,light_sensor_value,temp,humidity)))
+
+		# Save the sensor readings to the CSV file
+        f=open(log_file,'a')
+        f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture_sensor_value,light_sensor_value,temp,humidity))
+        f.close()
 
         time.sleep(5)
 
