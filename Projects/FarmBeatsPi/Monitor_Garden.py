@@ -61,8 +61,11 @@ while True:
         light_sensor_value = grovepi.analogRead(light_sensor)
 
         # Calculate resistance of light sensor in K
-        light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
-        print("Light Sensor Level: %d K: %.2f" %(light_sensor_value,  light_resistance))
+        #if light_sensor_value > 0:
+        #    light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
+        #    print("Light Sensor Level: %d K: %.2f" %(light_sensor_value,  light_resistance))
+        
+        print("Light Sensor Level: %d" %(light_sensor_value))
 
         # Get Moisture sensor value and print
         print("Soil Moisture Level: %d" %grovepi.analogRead(moisture_sensor))
