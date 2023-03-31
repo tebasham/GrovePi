@@ -37,7 +37,7 @@ import time
 # Connect the Grove Temperature & Humidity Sensor Pro to digital port D4
 # This example uses the blue colored sensor.
 # SIG,NC,VCC,GND
-dht_sensor = 4  # The Sensor goes on digital port D4.
+dht_sensor = 2  # The Sensor goes on digital port D4.
 # temp_humidity_sensor_type
 dht_white = 1   # The White colored sensor.
 
@@ -55,7 +55,7 @@ while True:
         # The first parameter is the port, the second parameter is the type of sensor.
         [temp,humidity] = grovepi.dht(dht_sensor,dht_white)  
         if math.isnan(temp) == False and math.isnan(humidity) == False:
-            print("temp = %.02f C humidity =%.02f%%"%(temp, humidity))
+            print("temp = %.02f C humidity =%.02f%%" %(temp, humidity))
 
         # Get sensor value
         light_sensor_value = grovepi.analogRead(light_sensor)
