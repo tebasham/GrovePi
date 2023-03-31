@@ -61,8 +61,8 @@ while True:
         light_sensor_value = grovepi.analogRead(light_sensor)
 
         # Calculate resistance of sensor in K
-        resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
-        print("sensor_value = %d resistance = %.2f" %(light_sensor_value,  resistance))
+        light_resistance = (float)(1023 - light_sensor_value) * 10 / light_sensor_value
+        print("light_sensor_value = %d resistance = %.2f" %(light_sensor_value,  light_resistance))
 
         print(grovepi.analogRead(moisture_sensor))
 
