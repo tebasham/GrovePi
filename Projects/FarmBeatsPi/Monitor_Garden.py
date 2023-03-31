@@ -79,14 +79,15 @@ while True:
         # Print the collected sensor readings to terminal
         print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
 
-        dataWriter.writerow(currTime,moisture,light,temp,humidity)
+        csvSensorData = [currTime,moisture,light,temp,humidity]
+        dataWriter.writerow(csvSensorData)
 
 		# Save the sensor readings to the CSV file
         #f=open(logFile,'a')
         #f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture,light,temp,humidity))
         #f.close()
 
-        del light, moisture, temp, humidity
+        del light, moisture, temp, humidity, currTime, csvSensorData
 
         time.sleep(5)
     except KeyboardInterrupt:
