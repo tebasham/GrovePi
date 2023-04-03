@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 #
-# Azure Blob Storage file uploaded
-#	*	Uploads a file to Azure Blob Storage.
+# GrovePi Project for FarmBeats monitoring.
+#	*	Reads the data from moisture, light, and temperature and humidity sensor. Logs the data to csv file.
 #	
+#	*	Sensor Connections on the GrovePi:
+#			-> Grove Moisture sensor	- Port A2
+#			-> Grove light sensor		- Port A0
+#			-> Grove DHT sensors		- Port D2
+#
+# The GrovePi connects the Raspberry Pi and Grove sensors.  You can learn more about GrovePi here:  http://www.dexterindustries.com/GrovePi
+#
 '''
 ## License
 
@@ -58,7 +65,7 @@ upload_file_path = os.path.join(local_path, local_file_name)
 # blob_client = blob_service_client.get_blob_client(container=farmbeatspicsv, blob=local_file_name)
 upload_blob_file("fbpicsv" , blob_service_client, "farmbeatspicsv", upload_file_path, local_file_name)
 
-print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
+# print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
 
 # Upload the created file
 # with open(file=upload_file_path, mode="rb") as data:
