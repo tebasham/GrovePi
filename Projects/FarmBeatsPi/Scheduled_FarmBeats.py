@@ -42,7 +42,7 @@ import math
 import time
 import csv
 
-# Connect the Grove Temperature & Humidity Sensor Pro to digital port D4
+# Connect the Grove Temperature & Humidity Sensor Pro to digital port D2
 # SIG,NC,VCC,GND
 dhtSensor = 2
 # DHT Pro Sensor Type
@@ -80,26 +80,21 @@ def writeCsvData(csvSensorData):
     dataWriter.writerow(csvSensorData)
     return 1 
 
-while True:
-    try:
-        currTime = time.strftime("%Y-%m-%d:%H-%M-%S")
+try:
+    currTime = time.strftime("%Y-%m-%d:%H-%M-%S")
 
-        [moisture,light,temp,humidity] = readSensor()
+    [moisture,light,temp,humidity] = readSensor()
 
-        # Print the collected sensor readings to terminal
-        print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
+    # Print the collected sensor readings to terminal
+    print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
 
-        # Write the collected sensor readings to csv file
-        writeCsvData([currTime,moisture,light,temp,humidity])
+    # Write the collected sensor readings to csv file
+    writeCsvData([currTime,moisture,light,temp,humidity])
 
-		# Save the sensor readings to the CSV file
-        #f=open(logFile,'a')
-        #f.write("%s,%d,%d,%.2f,%.2f;\n" %(curr_time,moisture,light,temp,humidity))
-        #f.close()
+    # Close the file
+    logFile.close()
 
-        time.sleep(5)
-    except KeyboardInterrupt:
-        logFile.close()
-        break
-    except IOError:
-        print("Error")
+except KeyboardInterrupt:
+    logFile.close()
+except IOError:
+    print("Error")
