@@ -42,7 +42,7 @@ import math
 import time
 import csv
 
-# Connect the Grove Temperature & Humidity Sensor Pro to digital port D2
+# Connect the Grove DHT Pro Sensor to digital port D2
 # SIG,NC,VCC,GND
 dhtSensor = 2
 # DHT Pro Sensor Type
@@ -86,7 +86,7 @@ try:
     [moisture,light,temp,humidity] = readSensor()
 
     # Print the collected sensor readings to terminal
-    print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
+    # print(("Time: %s\nMoisture: %d\nLight: %d\nTemp: %.2f\nHumidity:%.2f %%\n" %(currTime,moisture,light,temp,humidity)))
 
     # Write the collected sensor readings to csv file
     writeCsvData([currTime,moisture,light,temp,humidity])
