@@ -57,7 +57,7 @@ lightSensor = 0
 # SIG,NC,VCC,GND
 moistureSensor = 2
 
-logFile = open("farmbeatspi_log.csv", 'a', newline='')
+logFile = open("/home/pi/GrovePi/Projects/FarmBeatsPi/farmbeatspi_log.csv", 'a', newline='')
 
 #Read the data from the sensors
 def readSensor():
