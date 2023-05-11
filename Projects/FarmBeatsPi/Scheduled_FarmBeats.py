@@ -38,6 +38,7 @@ THE SOFTWARE.
 '''
 
 import grovepi
+import logging
 import math
 import time
 import csv
@@ -58,6 +59,13 @@ lightSensor = 0
 moistureSensor = 2
 
 logFile = open("/home/pi/GrovePi/Projects/FarmBeatsPi/farmbeatspi_log.csv", 'a', newline='')
+
+logger = logging.getLogger('farmbeatsDataLogger')
+logger.setLevel(logging.ERROR)
+handler = logging.FileHandler('farmbeatsDataLogger.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 #Read the data from the sensors
 def readSensor():
@@ -94,7 +102,9 @@ try:
     # Close the file
     logFile.close()
 
+    logger.info("Data collected and written to CSV")
+
 except KeyboardInterrupt:
     logFile.close()
-except IOError:
-    print("Error")
+except IOError as e:
+    logger.error(e)

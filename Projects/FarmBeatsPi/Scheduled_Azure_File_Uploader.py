@@ -1,15 +1,8 @@
 #!/usr/bin/env python
 #
-# GrovePi Project for FarmBeats monitoring.
-#	*	Reads the data from moisture, light, and temperature and humidity sensor. Logs the data to csv file.
+# Azure Blob Storage file uploaded
+#	*	Uploads a file to Azure Blob Storage.
 #	
-#	*	Sensor Connections on the GrovePi:
-#			-> Grove Moisture sensor	- Port A2
-#			-> Grove light sensor		- Port A0
-#			-> Grove DHT sensors		- Port D2
-#
-# The GrovePi connects the Raspberry Pi and Grove sensors.  You can learn more about GrovePi here:  http://www.dexterindustries.com/GrovePi
-#
 '''
 ## License
 
@@ -34,9 +27,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
-import os, uuid
+import os
+import uuid
+import logging
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+
+logger = logging.getLogger('azureuploadlogger')
+logger.setLevel(logging.ERROR)
+handler = logging.FileHandler('azureUploader.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 def upload_blob_file(self, blob_service_client: BlobServiceClient, container_name, file_path, file_name):
     container_client = blob_service_client.get_container_client(container=container_name)
@@ -59,14 +61,14 @@ local_path = "/home/pi/GrovePi/Projects/FarmBeatsPi/"
 
 # Create a file in the local data directory to upload and download
 local_file_name = "farmbeatspi_log.csv"
+
 upload_file_path = os.path.join(local_path, local_file_name)
+
 
 # Create a blob client using the local file name as the name for the blob
 # blob_client = blob_service_client.get_blob_client(container=farmbeatspicsv, blob=local_file_name)
-upload_blob_file("fbpicsv" , blob_service_client, "farmbeatspicsv", upload_file_path, local_file_name)
-
-# print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
-
-# Upload the created file
-# with open(file=upload_file_path, mode="rb") as data:
-#    blob_client.upload_blob(data)
+try:
+    upload_blob_file("fbpicsv" , blob_service_client, "farmbeatspicsv", upload_file_path, local_file_name)
+    logger.info("Uploaded file: " + local_file_name)
+except Exception as e:
+    logger.error(e)
